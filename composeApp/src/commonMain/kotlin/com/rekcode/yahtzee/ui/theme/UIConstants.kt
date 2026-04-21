@@ -237,6 +237,18 @@ object UiConstants {
     /**
      * Display name used to identify the boundary between the upper and lower
      * score sections within the score sheet.
+     *
+     * This value is intentionally aligned with the display name provided by the
+     * Yahtzee game engine API for the "Three of a Kind" category.
+     *
+     * Architectural Contract:
+     * - This constant must remain synchronized with the engine's category
+     *   display names.
+     * - It is used by the UI layer to determine where to split the score sheet
+     *   into upper and lower sections.
+     *
+     * Any change to engine-provided display names must be reflected here to
+     * maintain correct UI behavior.
      */
     const val ScoreSectionLowerBoundaryName = "Three of a Kind"
 

@@ -3,6 +3,9 @@ package com.rekcode.yahtzee
 
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import com.rekcode.yahtzee.generated.resources.Res
+import com.rekcode.yahtzee.generated.resources.app_name
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Desktop entry point for the Yahtzee application.
@@ -20,7 +23,7 @@ import androidx.compose.ui.window.application
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
-        title = "Yahtzee",
+        title = stringResource(Res.string.app_name),
         resizable = true
     ) {
         window.minimumSize = java.awt.Dimension(350, 770)

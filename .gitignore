@@ -1,16 +1,32 @@
+# IntelliJ / Android Studio
+.idea/
 *.iml
-.kotlin/
+
+# Gradle
 .gradle/
 **/build/
+
+# Kotlin
+.kotlin/
+
+# Local config (machine-specific)
 local.properties
-.idea/
+
+# OS files
 .DS_Store
-captures/
+
+# Android / NDK
 .externalNativeBuild/
 .cxx/
+
+# Misc
+captures/
 node_modules/
 
+# Xcode (user-specific)
 **/xcuserdata/
+
+# Xcode project structure (keep shared config)
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
 !*.xcodeproj/xcshareddata/

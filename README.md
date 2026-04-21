@@ -44,7 +44,7 @@ Platform Entry (Android / Desktop / iOS)
 ## 🎨 Design System
 
 ### Colors
-composeResources/files/designSystem/colors.txt
+composeApp/src/commonMain/designSystem/colors.txt
 
 - Stored as XML (with .txt extension)
 - Processed by Gradle
