@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Build release artifacts
+        run: .\gradlew.bat :composeApp:prepareReleaseArtifacts
+        env:
+          GPR_USER: ${{ secrets.GPR_USER }}
+          GPR_KEY: ${{ secrets.GPR_KEY }}
+
+      - name: Extract version
+        id: version
+        shell: pwsh
+        run: |
+          $version = "${env:GITHUB_REF}" -replace '^refs/tags/v', ''
+          "VERSION=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Yahtzee v${{ steps.version.outputs.VERSION }}
+          tag_name: ${{ github.ref }}
+          files: |
+            composeApp/build/release-artifacts/android/Yahtzee-${{ steps.version.outputs.VERSION }}.apk
+            composeApp/build/release-artifacts/windows/Yahtzee-${{ steps.version.outputs.VERSION }}.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
