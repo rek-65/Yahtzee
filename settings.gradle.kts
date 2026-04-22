@@ -29,8 +29,13 @@ dependencyResolutionManagement {
         maven {
             url = uri("https://maven.pkg.github.com/rek-65/YahtzeeGameEngine-KMP")
             credentials {
-                username = providers.gradleProperty("gpr.user").orNull
-                password = providers.gradleProperty("gpr.key").orNull
+                username = providers.gradleProperty("gpr.user")
+                    .orElse(providers.environmentVariable("GPR_USER"))
+                    .orNull
+
+                password = providers.gradleProperty("gpr.key")
+                    .orElse(providers.environmentVariable("GPR_KEY"))
+                    .orNull
             }
         }
     }

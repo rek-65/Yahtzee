@@ -207,3 +207,32 @@ dependencies {
     debugImplementation(libs.compose.uiTooling)
 }
 
+val releaseApkArtifactName = providers.gradleProperty("APP_NAME")
+    .zip(providers.gradleProperty("VERSION_NAME")) { name, version ->
+        "$name-$version.apk"
+    }
+
+tasks.register<Copy>("prepareReleaseApk") {
+    dependsOn("assembleRelease")
+
+    from(layout.buildDirectory.file("outputs/apk/release/composeApp-release-unsigned.apk"))
+    into(layout.buildDirectory.dir("release-artifacts/android"))
+    rename("composeApp-release-unsigned.apk", releaseApkArtifactName.get())
+}
+
+val releaseExeArtifactName = providers.gradleProperty("APP_NAME")
+    .zip(providers.gradleProperty("VERSION_NAME")) { name, version ->
+        "$name-$version.exe"
+    }
+
+tasks.register<Copy>("prepareReleaseExe") {
+    dependsOn("packageReleaseExe")
+
+    from(layout.buildDirectory.file("compose/binaries/main-release/exe/$appName-$appVersionName.exe"))
+    into(layout.buildDirectory.dir("release-artifacts/windows"))
+    rename("$appName-$appVersionName.exe", releaseExeArtifactName.get())
+}
+
+tasks.register("prepareReleaseArtifacts") {
+    dependsOn("prepareReleaseApk", "prepareReleaseExe")
+}
