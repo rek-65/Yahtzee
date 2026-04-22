@@ -192,7 +192,12 @@ compose.desktop {
         nativeDistributions {
             packageName = appName
             packageVersion = appVersionName
-            targetFormats(TargetFormat.Exe, TargetFormat.Msi)
+            targetFormats(
+                TargetFormat.Exe,
+                TargetFormat.Msi,
+                TargetFormat.Deb,
+                TargetFormat.Rpm
+            )
             windows {
                 iconFile.set(project.file("desktop-icons/icon.ico"))
             }
