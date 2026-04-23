@@ -137,6 +137,9 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
       - name: Build iOS Arm64 framework
         run: ./gradlew :composeApp:linkReleaseFrameworkIosArm64
 
