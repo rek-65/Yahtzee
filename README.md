@@ -74,7 +74,39 @@ com.rekcode.yahtzee:yahtzee-engine-kmp
 
 - Android
 - Desktop (JVM)
-- iOS
+- iOS (framework)
+
+### iOS Framework
+
+iOS support is provided as a compiled Kotlin Multiplatform framework.
+
+- Built using Kotlin/Native
+- Generated via CI on macOS runners
+- Output is a `.framework` artifact
+
+This framework is included in GitHub Release assets as a downloadable build artifact.
+
+Build output path:
+composeApp/build/bin/ios*/releaseFramework/
+
+### iOS Usage
+
+The iOS framework is not a standalone application and cannot be installed directly on a device.
+
+To use:
+
+1. Create or open an iOS project in Xcode
+2. Import the provided `.framework`
+3. Link it to your app target
+4. Sign the app using an Apple account (free or paid)
+
+### Limitations
+
+- No `.ipa` is produced
+- No TestFlight or App Store distribution
+- Signing and device deployment must be handled in Xcode
+
+This is intentional and aligns with the architectural goal of keeping the UI and platform layers decoupled from the shared game engine.
 
 ## 🏗️ Build
 
