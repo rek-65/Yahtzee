@@ -152,23 +152,24 @@ jobs:
           GPR_USER: ${{ secrets.GPR_USER }}
           GPR_KEY: ${{ secrets.GPR_KEY }}
 
+      - name: Prepare iOS release artifact directory
+        run: mkdir -p composeApp/build/release-artifacts/ios
+
       - name: Package iOS Arm64 framework
         run: |
           cd composeApp/build/bin/iosArm64/releaseFramework
-          zip -r Yahtzee-ios-arm64-framework.zip .
+          zip -r ../../../release-artifacts/ios/Yahtzee-ios-arm64-framework.zip .
 
       - name: Package iOS Simulator framework
         run: |
           cd composeApp/build/bin/iosSimulatorArm64/releaseFramework
-          zip -r Yahtzee-ios-simulator-framework.zip .
+          zip -r ../../../release-artifacts/ios/Yahtzee-ios-simulator-framework.zip .
 
       - name: Upload iOS framework zips
         uses: actions/upload-artifact@v4
         with:
-          name: ios-frameworks
-          path: |
-            composeApp/build/bin/iosArm64/releaseFramework/Yahtzee-ios-arm64-framework.zip
-            composeApp/build/bin/iosSimulatorArm64/releaseFramework/Yahtzee-ios-simulator-framework.zip
+          name: ios-artifacts
+          path: composeApp/build/release-artifacts/ios/
 
   release:
     needs:
@@ -200,10 +201,10 @@ jobs:
           name: linux-artifacts
           path: artifacts/linux
 
-      - name: Download iOS frameworks
+      - name: Download iOS artifacts
         uses: actions/download-artifact@v4
         with:
-          name: ios-frameworks
+          name: ios-artifacts
           path: artifacts/ios
 
       - name: Extract version
