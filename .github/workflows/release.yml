@@ -72,6 +72,12 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Recreate upload keystore
+        env:
+          YAHTZEE_UPLOAD_STORE_FILE_BASE64: ${{ secrets.YAHTZEE_UPLOAD_STORE_FILE_BASE64 }}
+        run: |
+          echo "$YAHTZEE_UPLOAD_STORE_FILE_BASE64" | base64 --decode > "${{ runner.temp }}/rekcode_yahtzee_key"
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
@@ -81,6 +87,10 @@ jobs:
           GPR_USER: ${{ secrets.GPR_USER }}
           GPR_KEY: ${{ secrets.GPR_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ORG_GRADLE_PROJECT_YAHTZEE_UPLOAD_STORE_FILE: ${{ runner.temp }}/rekcode_yahtzee_key
+          ORG_GRADLE_PROJECT_YAHTZEE_UPLOAD_STORE_PASSWORD: ${{ secrets.YAHTZEE_UPLOAD_STORE_PASSWORD }}
+          ORG_GRADLE_PROJECT_YAHTZEE_UPLOAD_KEY_ALIAS: ${{ secrets.YAHTZEE_UPLOAD_KEY_ALIAS }}
+          ORG_GRADLE_PROJECT_YAHTZEE_UPLOAD_KEY_PASSWORD: ${{ secrets.YAHTZEE_UPLOAD_KEY_PASSWORD }}
 
       - name: Extract version
         id: version
