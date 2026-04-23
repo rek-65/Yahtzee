@@ -190,6 +190,12 @@ jobs:
           name: linux-artifacts
           path: artifacts/linux
 
+      - name: Download iOS frameworks
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-frameworks
+          path: artifacts/ios
+
       - name: Extract version
         id: version
         run: |
@@ -206,5 +212,6 @@ jobs:
             artifacts/windows/*.exe
             artifacts/linux/*.deb
             artifacts/linux/*.rpm
+            artifacts/ios/**/*.framework/**
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
