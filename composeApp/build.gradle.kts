@@ -169,6 +169,14 @@ android {
         versionCode = appVersionCode
         versionName = appVersionName
     }
+    signingConfigs {
+        create("release") {
+            storeFile = file(providers.gradleProperty("YAHTZEE_UPLOAD_STORE_FILE").get())
+            storePassword = providers.gradleProperty("YAHTZEE_UPLOAD_STORE_PASSWORD").get()
+            keyAlias = providers.gradleProperty("YAHTZEE_UPLOAD_KEY_ALIAS").get()
+            keyPassword = providers.gradleProperty("YAHTZEE_UPLOAD_KEY_PASSWORD").get()
+        }
+    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -177,6 +185,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -190,8 +199,12 @@ compose.desktop {
         mainClass = "com.rekcode.yahtzee.MainKt"
 
         nativeDistributions {
+            targetFormats(TargetFormat.Exe)
             packageName = appName
             packageVersion = appVersionName
+            description = "Cross-platform Yahtzee application built with Kotlin Multiplatform and Compose Multiplatform."
+            copyright = "© 2026 Robert Kennedy. All rights reserved."
+            vendor = "Robert Kennedy"
             targetFormats(
                 TargetFormat.Exe,
                 TargetFormat.Msi,
@@ -200,6 +213,9 @@ compose.desktop {
             )
             windows {
                 iconFile.set(project.file("desktop-icons/icon.ico"))
+                shortcut = true
+                menu = true
+                menuGroup = appName
             }
             linux {
                 iconFile.set(project.file("desktop-icons/icon.png"))

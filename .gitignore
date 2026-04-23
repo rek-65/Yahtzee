@@ -18,6 +18,7 @@ local.properties
 # Android / NDK
 .externalNativeBuild/
 .cxx/
+**/release/
 
 # Misc
 captures/
