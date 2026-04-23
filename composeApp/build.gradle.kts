@@ -155,6 +155,11 @@ kotlin {
     }
 }
 
+val yahtzeeUploadStoreFile = providers.gradleProperty("YAHTZEE_UPLOAD_STORE_FILE")
+val yahtzeeUploadStorePassword = providers.gradleProperty("YAHTZEE_UPLOAD_STORE_PASSWORD")
+val yahtzeeUploadKeyAlias = providers.gradleProperty("YAHTZEE_UPLOAD_KEY_ALIAS")
+val yahtzeeUploadKeyPassword = providers.gradleProperty("YAHTZEE_UPLOAD_KEY_PASSWORD")
+
 android {
     namespace = "com.rekcode.yahtzee"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -171,10 +176,17 @@ android {
     }
     signingConfigs {
         create("release") {
-            storeFile = file(providers.gradleProperty("YAHTZEE_UPLOAD_STORE_FILE").get())
-            storePassword = providers.gradleProperty("YAHTZEE_UPLOAD_STORE_PASSWORD").get()
-            keyAlias = providers.gradleProperty("YAHTZEE_UPLOAD_KEY_ALIAS").get()
-            keyPassword = providers.gradleProperty("YAHTZEE_UPLOAD_KEY_PASSWORD").get()
+            if (
+                yahtzeeUploadStoreFile.isPresent &&
+                yahtzeeUploadStorePassword.isPresent &&
+                yahtzeeUploadKeyAlias.isPresent &&
+                yahtzeeUploadKeyPassword.isPresent
+            ) {
+                storeFile = file(yahtzeeUploadStoreFile.get())
+                storePassword = yahtzeeUploadStorePassword.get()
+                keyAlias = yahtzeeUploadKeyAlias.get()
+                keyPassword = yahtzeeUploadKeyPassword.get()
+            }
         }
     }
     packaging {
@@ -185,7 +197,14 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            signingConfig = signingConfigs.getByName("release")
+            if (
+                yahtzeeUploadStoreFile.isPresent &&
+                yahtzeeUploadStorePassword.isPresent &&
+                yahtzeeUploadKeyAlias.isPresent &&
+                yahtzeeUploadKeyPassword.isPresent
+            ) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
     compileOptions {
