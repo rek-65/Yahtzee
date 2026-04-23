@@ -93,7 +93,7 @@ fun SetupScreen(
                     .align(Alignment.BottomStart)
                     .padding(
                         start = uiDimens.setupDiceEdgePadding,
-                        bottom = uiDimens.setupDiceBottomPadding
+                        bottom = uiDimens.setupDiceBottomPadding + uiDimens.screenPadding
                     )
             )
 
@@ -104,7 +104,7 @@ fun SetupScreen(
                     .align(Alignment.BottomEnd)
                     .padding(
                         end = uiDimens.setupDiceEdgePadding,
-                        bottom = uiDimens.setupDiceBottomPadding
+                        bottom = uiDimens.setupDiceBottomPadding + uiDimens.screenPadding
                     )
             )
 

@@ -159,6 +159,8 @@ fun GameScreen(
                 )
             }
 
+            Spacer(modifier = Modifier.height(uiDimens.screenPadding))
+
             if (uiState.showGameOverDialog) {
                 AlertDialog(
                     onDismissRequest = {},

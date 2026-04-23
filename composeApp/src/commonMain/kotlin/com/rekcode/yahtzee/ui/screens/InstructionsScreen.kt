@@ -145,6 +145,9 @@ fun InstructionsScreen(
                     fontSize = uiDimens.buttonLabelFontSize
                 )
             }
+
+            Spacer(modifier = Modifier.height(uiDimens.screenPadding))
+
         }
     }
 }
