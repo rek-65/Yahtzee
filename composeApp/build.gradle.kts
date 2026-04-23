@@ -236,9 +236,12 @@ val releaseApkArtifactName = providers.gradleProperty("APP_NAME")
 tasks.register<Copy>("prepareReleaseApk") {
     dependsOn("assembleRelease")
 
-    from(layout.buildDirectory.file("outputs/apk/release/composeApp-release-unsigned.apk"))
+    from(layout.buildDirectory.dir("outputs/apk/release")) {
+        include("*.apk")
+        rename { "$appName-$appVersionName.apk" }
+    }
+
     into(layout.buildDirectory.dir("release-artifacts/android"))
-    rename("composeApp-release-unsigned.apk", releaseApkArtifactName.get())
 }
 
 val releaseExeArtifactName = providers.gradleProperty("APP_NAME")
@@ -254,6 +257,25 @@ tasks.register<Copy>("prepareReleaseExe") {
     rename("$appName-$appVersionName.exe", releaseExeArtifactName.get())
 }
 
+tasks.register<Copy>("prepareReleaseLinux") {
+    dependsOn("packageReleaseDeb", "packageReleaseRpm")
+
+    val appName = providers.gradleProperty("APP_NAME").get()
+    val version = providers.gradleProperty("VERSION_NAME").get()
+
+    from(layout.buildDirectory.dir("compose/binaries/main-release/deb")) {
+        include("*.deb")
+        rename { "$appName-$version.deb" }
+    }
+
+    from(layout.buildDirectory.dir("compose/binaries/main-release/rpm")) {
+        include("*.rpm")
+        rename { "$appName-$version.rpm" }
+    }
+
+    into(layout.buildDirectory.dir("release-artifacts/linux"))
+}
+
 tasks.register("prepareReleaseArtifacts") {
-    dependsOn("prepareReleaseApk", "prepareReleaseExe")
+    dependsOn("prepareReleaseApk", "prepareReleaseExe", "prepareReleaseLinux")
 }
