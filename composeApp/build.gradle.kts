@@ -199,7 +199,6 @@ compose.desktop {
         mainClass = "com.rekcode.yahtzee.MainKt"
 
         nativeDistributions {
-            targetFormats(TargetFormat.Exe)
             packageName = appName
             packageVersion = appVersionName
             description = "Cross-platform Yahtzee application built with Kotlin Multiplatform and Compose Multiplatform."
@@ -276,6 +275,22 @@ tasks.register<Copy>("prepareReleaseLinux") {
     into(layout.buildDirectory.dir("release-artifacts/linux"))
 }
 
+tasks.register("prepareReleaseAndroidArtifacts") {
+    dependsOn("prepareReleaseApk")
+}
+
+tasks.register("prepareReleaseWindowsArtifacts") {
+    dependsOn("prepareReleaseExe")
+}
+
+tasks.register("prepareReleaseLinuxArtifacts") {
+    dependsOn("prepareReleaseLinux")
+}
+
 tasks.register("prepareReleaseArtifacts") {
-    dependsOn("prepareReleaseApk", "prepareReleaseExe", "prepareReleaseLinux")
+    dependsOn(
+        "prepareReleaseAndroidArtifacts",
+        "prepareReleaseWindowsArtifacts",
+        "prepareReleaseLinuxArtifacts"
+    )
 }
