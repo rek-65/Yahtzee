@@ -152,13 +152,23 @@ jobs:
           GPR_USER: ${{ secrets.GPR_USER }}
           GPR_KEY: ${{ secrets.GPR_KEY }}
 
-      - name: Upload iOS frameworks
+      - name: Package iOS Arm64 framework
+        run: |
+          cd composeApp/build/bin/iosArm64/releaseFramework
+          zip -r Yahtzee-ios-arm64-framework.zip .
+
+      - name: Package iOS Simulator framework
+        run: |
+          cd composeApp/build/bin/iosSimulatorArm64/releaseFramework
+          zip -r Yahtzee-ios-simulator-framework.zip .
+
+      - name: Upload iOS framework zips
         uses: actions/upload-artifact@v4
         with:
           name: ios-frameworks
           path: |
-            composeApp/build/bin/iosArm64/releaseFramework/
-            composeApp/build/bin/iosSimulatorArm64/releaseFramework/
+            composeApp/build/bin/iosArm64/releaseFramework/Yahtzee-ios-arm64-framework.zip
+            composeApp/build/bin/iosSimulatorArm64/releaseFramework/Yahtzee-ios-simulator-framework.zip
 
   release:
     needs:
@@ -212,6 +222,6 @@ jobs:
             artifacts/windows/*.exe
             artifacts/linux/*.deb
             artifacts/linux/*.rpm
-            artifacts/ios/**/*.framework/**
+            artifacts/ios/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

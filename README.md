@@ -84,7 +84,7 @@ iOS support is provided as a compiled Kotlin Multiplatform framework.
 - Generated via CI on macOS runners
 - Output is a `.framework` artifact
 
-This framework is included in GitHub Release assets as a downloadable build artifact.
+This framework is included in GitHub Release assets as a compressed (.zip) build artifact.
 
 Build output path:
 composeApp/build/bin/ios*/releaseFramework/
@@ -95,10 +95,11 @@ The iOS framework is not a standalone application and cannot be installed direct
 
 To use:
 
-1. Create or open an iOS project in Xcode
-2. Import the provided `.framework`
-3. Link it to your app target
-4. Sign the app using an Apple account (free or paid)
+1. Download and extract the provided framework archive
+2. Create or open an iOS project in Xcode
+3. Import the extracted `.framework`
+4. Link it to your app target
+5. Sign the app using an Apple account (free or paid)
 
 ### Limitations
 
