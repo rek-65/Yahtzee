@@ -142,9 +142,15 @@ jobs:
 
       - name: Build iOS Arm64 framework
         run: ./gradlew :composeApp:linkReleaseFrameworkIosArm64
+        env:
+          GPR_USER: ${{ secrets.GPR_USER }}
+          GPR_KEY: ${{ secrets.GPR_KEY }}
 
       - name: Build iOS Simulator framework
         run: ./gradlew :composeApp:linkReleaseFrameworkIosSimulatorArm64
+        env:
+          GPR_USER: ${{ secrets.GPR_USER }}
+          GPR_KEY: ${{ secrets.GPR_KEY }}
 
       - name: Upload iOS frameworks
         uses: actions/upload-artifact@v4
