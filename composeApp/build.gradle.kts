@@ -237,8 +237,9 @@ tasks.register<Copy>("prepareReleaseApk") {
 
     from(layout.buildDirectory.dir("outputs/apk/release")) {
         include("*.apk")
-        rename { "$appName-$appVersionName.apk" }
     }
+
+    rename("*.apk", "$appName-$appVersionName.apk")
 
     into(layout.buildDirectory.dir("release-artifacts/android"))
 }
