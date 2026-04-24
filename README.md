@@ -109,6 +109,14 @@ To use:
 
 This is intentional and aligns with the architectural goal of keeping the UI and platform layers decoupled from the shared game engine.
 
+### iOS Distribution
+
+Full iOS application packaging (IPA), TestFlight distribution, and App Store deployment require Apple Developer Program signing infrastructure.
+
+This project intentionally stops at the framework build stage, which represents the platform boundary between shared logic and native application hosting.
+
+This approach demonstrates full cross-platform build capability while maintaining platform-independent architecture.
+
 ## 🏗️ Build
 
 ### Requirements
